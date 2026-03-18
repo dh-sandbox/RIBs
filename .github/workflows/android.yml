@@ -38,6 +38,26 @@ jobs:
       - name: Upload coverage to Qlty
         if: success() || failure()
         uses: qltysh/qlty-action/coverage@v2
+        env:
+          JACOCO_SOURCE_PATH: >-
+            libraries/rib-base/src/main/kotlin
+            libraries/rib-compiler-app/src/main/kotlin
+            libraries/rib-compiler-test/src/main/kotlin
+            libraries/rib-coroutines/src/main/kotlin
+            libraries/rib-coroutines-test/src/main/kotlin
+            libraries/rib-router-navigator/src/main/kotlin
+            libraries/rib-android/src/main/kotlin
+            libraries/rib-android-core/src/main/kotlin
+            libraries/rib-android-compose/src/main/kotlin
+            libraries/rib-debug-utils/src/main/kotlin
+            libraries/rib-screen-stack-base/src/main/kotlin
+            libraries/rib-test/src/main/kotlin
+            libraries/rib-workflow/src/main/kotlin
+            libraries/rib-workflow-test/src/main/kotlin
+            tooling/rib-intellij-plugin/src/main/kotlin
+            tooling/rib-intellij-plugin/src/main/java
+            tooling/rib-flipper-plugin/src/main/kotlin
+            tooling/utils/intellij-broadcast-core/src/main/java
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: '**/jacocoTestReport.xml'
