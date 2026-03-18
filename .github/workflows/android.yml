@@ -32,9 +32,15 @@ jobs:
       - name: Build Project
         run: ./gradlew assemble --stacktrace
       - name : Testing
-        run: ./gradlew test --stacktrace
+        run: ./gradlew test jacocoTestReport --stacktrace
       - name: Final Checks
         run: ./gradlew check --stacktrace
+      - name: Upload coverage to Qlty
+        if: success() || failure()
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: '**/build/reports/jacoco/test/jacocoTestReport.xml'
       - name: Upload snapshot
         run: ./gradlew publish -PmavenCentralUsername="${{ secrets.SonatypeUsername }}" -PmavenCentralPassword="${{ secrets.SonatypePassword }}"
         if: success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && matrix.java_version == '11'
