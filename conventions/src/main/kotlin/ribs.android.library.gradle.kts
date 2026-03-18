@@ -19,6 +19,15 @@ plugins {
     kotlin("android")
     id("com.android.library")
     id("ribs.spotless")
+    jacoco
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+        xml.required = true
+        html.required = false
+        csv.required = false
+    }
 }
 
 kotlin {
